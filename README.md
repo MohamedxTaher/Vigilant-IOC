@@ -131,7 +131,7 @@ The test suite uses mocks for external reputation services. Files in `examples/`
 
 MIT License. See [LICENSE](LICENSE).
 
-Maintained by Mohamed Taher.
+BY-> Mohamed Taher
 
 - GitHub: https://github.com/MohamedxTaher
 - LinkedIn: https://www.linkedin.com/in/mohamed-taherx/
