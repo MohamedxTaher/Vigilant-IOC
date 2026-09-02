@@ -1,0 +1,20 @@
+# ── Core document-parsing deps ───────────────────────────────────────────
+oletools==0.60.1        # VBA macro + OLE analysis (≥0.60 for .analyze_macros)
+olefile==0.46           # Low-level OLE container helper
+pdfminer.six==20231228  # Static PDF text & object extraction
+PyMuPDF==1.24.3         # Fast PDF parser (embeds + JavaScript)
+
+# ── IOC extraction & enrichment ──────────────────────────────────────────
+requests==2.33.0        # HTTP calls for VT & AbuseIPDB
+python-dotenv==1.0.1    # Load API keys from .env
+tldextract==5.1.2       # Clean URL domain/TLD splitting
+
+# ── CLI / UX ─────────────────────────────────────────────────────────────
+click==8.1.7            # Command-line interface
+
+# ── Validation
+jsonschema==4.22.0      # Ensure report output matches schema
+
+# ── Optional niceties (safe to omit) ─────────────────────────────────────
+# rich==13.7.1          # Colour console output & spinners
+# tabulate==0.9.0       # Pretty ASCII tables for --verbose

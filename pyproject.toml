@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name        = "vigilant-ioc"
+version     = "2.0.0"
+description = "Static IOC extractor and threat scorer for PDFs and Office documents"
+authors     = [{name = "Mohamed Taher", email = "contact@vigilant-ioc.dev"}]
+maintainers = [{name = "Mohamed Taher"}]
+license     = {text = "MIT"}
+requires-python = ">=3.10"
+readme      = "README.md"
+homepage    = "https://github.com/MohamedxTaher/Vigilant-IOC"
+repository  = "https://github.com/MohamedxTaher/Vigilant-IOC"
+issues      = "https://github.com/MohamedxTaher/Vigilant-IOC/issues"
+keywords    = ["ioc", "threat-intelligence", "malware-detection", "security-analysis"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Security Professionals",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Security",
+]
+
+[tool.setuptools]
+packages   = ["vigilant_ioc_core"]         # directories containing __init__.py
+py-modules = ["logger", "settings"]         # single-file modules at repo root

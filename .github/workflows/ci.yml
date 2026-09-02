@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build-test:
+    name: Test on ${{ matrix.os }} with Python ${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ["3.10", "3.11"]
+
+    steps:
+    # ── 1. Checkout repo ──────────────────────────────────────────────
+    - uses: actions/checkout@v4
+
+    # ── 2. Set up the requested Python version ────────────────────────
+    - uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python }}
+        cache: "pip"
+
+    # ── 3. Install runtime + dev dependencies ─────────────────────────
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install -r dev-requirements.txt          # pytest / pytest-cov / ruff
+        pip install -e .                             # editable install
+
+    # ── 4. Run unit tests *with* built-in 80 % gate ────────────────────
+    - name: Run pytest
+      run: pytest --cov=vigilant_ioc_core --cov-report=xml --cov-report=term-missing
+
+    # ── 5. Upload coverage to Codecov ────────────────────────────────
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        files: coverage.xml
+        flags: ${{ matrix.os }}-py${{ matrix.python }}
+        fail_ci_if_error: true
+      # if your repo is private, uncomment the next lines
+      # env:
+      #   CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+    # ── 6. (optional) Lint with Ruff ───────────────────────────────────
+    - name: Ruff lint
+      run: ruff check .
+
+    # ── 7. End-to-end CLI smoke test ──────────────────────────────────
+    - name: End-to-end CLI test
+      shell: bash
+      env:
+        VT_API_KEY: ${{ secrets.VT_API_KEY }}
+        ABUSEIPDB_API_KEY: ${{ secrets.ABUSEIPDB_API_KEY }}
+      run: |
+        python main.py --file examples/test.pdf --report --quiet
+        if [ ! -f reports/test_report.md ]; then
+          echo "❌ CLI did not generate the report as expected"
+          exit 1
+        fi
+
+
+
