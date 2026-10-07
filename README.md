@@ -153,9 +153,8 @@ tests/
   └── unit/                    # Isolated module tests
 ```
 
-## License & Author
+## License
 
-**Author**: Harsimran Sidhu (Original), Maintained by Mohamed Taher  
 **License**: [MIT License](LICENSE)
 
 ## Contributing
